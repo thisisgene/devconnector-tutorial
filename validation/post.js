@@ -1,22 +1,17 @@
 const Validator = require('validator')
 const isEmpty = require('./is-empty')
 
-module.exports = function validateLoginInput(data) {
+module.exports = function validatePostInput(data) {
   let errors = {}
 
-  data.email = !isEmpty(data.email) ? data.email : ''
-  data.password = !isEmpty(data.password) ? data.password : ''
+  data.text = !isEmpty(data.text) ? data.text : ''
 
-  if (!Validator.isEmail(data.email)) {
-    errors.email = 'Email is invalid.'
+  if (!Validator.isLength(data.text, { min: 3, max: 300 })) {
+    errors.text = 'Post must be between 3 and 300 cahracters.'
   }
 
-  if (Validator.isEmpty(data.email)) {
-    errors.email = 'Email is required.'
-  }
-
-  if (Validator.isEmpty(data.password)) {
-    errors.password = 'Password is required.'
+  if (Validator.isEmpty(data.text)) {
+    errors.text = 'Text is required.'
   }
 
   return {
